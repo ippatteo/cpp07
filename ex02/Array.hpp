@@ -3,12 +3,14 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <stdexcept> 
+#include <string> 
 
 template <typename T>
 class Array
 {
 	private:
-		int _size;
+		unsigned int _size;
 		T*	_array;
 	public:
 		Array();
@@ -16,12 +18,13 @@ class Array
 		Array(const Array &obj);
 		Array& operator=(const Array& obj); //qua possiamo non scrivere Array<T> perche stiamo gia nel contesto "<T>"
 		~Array();
+		T& operator[](unsigned int index);
 	};
 
 //Construction with no parameter: Creates an empty array.
 //ogni funzione ricordati di richiamare il template
 template <typename T>
-Array<T>::Array() : _array(new T[0]), _size(0)
+Array<T>::Array() : _size(0), _array(new T[0])
 {
 }
 
@@ -31,7 +34,7 @@ Construction with an unsigned int n as a parameter: Creates an array of n elemen
 Tip: Try to compile int * a = new int(); then display *a.
 */
 template <typename T>
-Array<T>::Array(unsigned int n) : _array(new T[n]), _size(n)
+Array<T>::Array(unsigned int n) : _size(n), _array(new T[n])
 {
 }
 
@@ -39,7 +42,7 @@ Array<T>::Array(unsigned int n) : _array(new T[n]), _size(n)
 Construction by copy
 */
 template <typename T>
-Array<T>::Array(const Array &to_copy) : _array(new T[to_copy._array]), _size(to_copy._size)
+Array<T>::Array(const Array &to_copy) :  _size(to_copy._size), _array(new T[to_copy._size])
 {
 	for (unsigned int i = 0; i < _size; i++)
 	{
@@ -64,8 +67,10 @@ Array<T>& Array<T>::operator=(const Array<T>& obj)
 template <typename T>
 Array<T>& Array<T>::operator=(const Array& to_copy)
 {
+	if (this == &to_copy)
+		return *this;
 	delete []_array;
-	_array = new T[to_copy._array];
+	_array = new T[to_copy._size];
 	_size = to_copy._size;
 	for (unsigned int i = 0; i < _size; i++)
 	{
@@ -85,4 +90,14 @@ Array<T>::~Array()
 {
 	std::cout<<"Array destructor called"<<std::endl;
 	delete []_array;
+}
+
+
+
+template <typename T>
+T &Array<T>::operator[](unsigned int index)
+{
+	if (index >= _size)
+		throw std::out_of_range("index out of bounds");
+	return _array[index];
 }
