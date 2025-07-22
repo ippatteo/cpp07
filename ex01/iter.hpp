@@ -1,6 +1,8 @@
-#pragma once
+#ifndef ITER_HPP
+#define ITER_HPP
 
 #include <iostream>
+#include <string>
 
 
 
@@ -18,3 +20,5 @@ void	call(T inArray)//questa è un normale template, puo anche essere chiamato d
 {
 	std::cout<<"value of the array "<< inArray <<std::endl;
 }
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ARRAY_HPP
+#define ARRAY_HPP
 
 #include <iostream>
 #include <cstdlib>
@@ -19,6 +20,7 @@ class Array
 		Array& operator=(const Array& obj); //qua possiamo non scrivere Array<T> perche stiamo gia nel contesto "<T>"
 		~Array();
 		T& operator[](unsigned int index);
+		unsigned int size() const;
 	};
 
 //Construction with no parameter: Creates an empty array.
@@ -101,3 +103,11 @@ T &Array<T>::operator[](unsigned int index)
 		throw std::out_of_range("index out of bounds");
 	return _array[index];
 }
+
+template <typename T>
+unsigned int Array<T>::size() const
+{
+	return _size;
+}
+
+#endif

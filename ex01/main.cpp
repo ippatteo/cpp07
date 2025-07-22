@@ -1,21 +1,31 @@
 #include "iter.hpp"
 
-int	main(void)
+int main(void)
 {
-	int	size = 20;
-	int	chunck[size];
-	std::string base = "generic";
-	for (int i = 0; i < size; i++)
-		chunck[i] = i + 1;
-	//for the function yo must always specify the type
-	//seeing that they are function pointers and they don't have a defined type
-	//being pointers the compiler can't recognize the type
-	iter(chunck, size, call<int>);//call deve essere chiamato con <int> perché non è una chiamata diretta
-
-	//example with strings
-	std::string	sChunck[size];
-	sChunck[0] = "jo mama";
-	for (int i = 1; i < size; i++)
-		sChunck[i] = sChunck[i - 1] + base;
-	iter(sChunck, size, call<std::string>);
+    // Test con array di interi
+    int numeri[] = {1, 2, 3, 4, 5};
+    int size = 5;
+    
+    std::cout << "--- Test con interi ---" << std::endl;
+    iter(numeri, size, call<int>);
+    
+    std::cout << std::endl;
+    
+    // Test con array di stringhe
+    std::string parole[] = {"ciao", "mondo", "template", "test"};
+    int sizeStr = 4;
+    
+    std::cout << "--- Test con stringhe ---" << std::endl;
+    iter(parole, sizeStr, call<std::string>);
+    
+    std::cout << std::endl;
+    
+    // Test con array di float
+    float decimali[] = {1.5f, 2.7f, 3.14f};
+    int sizeFloat = 3;
+    
+    std::cout << "--- Test con float ---" << std::endl;
+    iter(decimali, sizeFloat, call<float>);
+    
+    return 0;
 }
